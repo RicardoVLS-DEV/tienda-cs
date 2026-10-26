@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}{{ 'Editar producto' if editar else 'Agregar producto' }}{% endblock %}
+{% block content %}
+<div class="panel" style="max-width:640px;margin:0 auto">
+  <h1 style="font-size:2rem">{{ 'Editar producto' if editar else 'Agregar producto' }}</h1>
+  <form method="post">
+    <label for="name">Nombre</label>
+    <input id="name" name="name" required maxlength="120" value="{{ producto.name or '' }}">
+    <label for="description">Descripción</label>
+    <textarea id="description" name="description">{{ producto.description or '' }}</textarea>
+    <div class="row">
+      <div><label for="price">Precio</label>
+        <input id="price" name="price" type="number" step="0.01" min="0" required value="{{ producto.price or '' }}"></div>
+      <div><label for="stock">Stock</label>
+        <input id="stock" name="stock" type="number" min="0" required value="{{ producto.stock if producto.stock is not none else 0 }}"></div>
+    </div>
+    <label for="category">Categoría</label>
+    <input id="category" name="category" maxlength="60" value="{{ producto.category or '' }}">
+    <div class="actions">
+      <button class="btn" type="submit">{{ 'Guardar cambios' if editar else 'Crear producto' }}</button>
+      <a class="btn ghost" href="{{ url_for('productos') }}">Cancelar</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

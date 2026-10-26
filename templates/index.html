@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Inicio{% endblock %}
+{% block content %}
+<h1>Lo que necesitas,<br>de tu barrio a tu mesa.</h1>
+<p class="lead">Productos seleccionados con inventario al día. Crea una cuenta para administrar el catálogo.</p>
+{% if not session.user_id %}
+  <a class="btn" href="{{ url_for('registro') }}">Crear cuenta</a>
+  <a class="btn ghost" href="{{ url_for('login') }}">Iniciar sesión</a>
+{% else %}
+  <a class="btn" href="{{ url_for('productos') }}">Administrar productos</a>
+{% endif %}
+
+<h2>Novedades</h2>
+{% if productos %}
+<div class="grid">
+  {% for p in productos %}
+  <article class="item">
+    <span class="cat">{{ p.category or 'Sin categoría' }}</span>
+    <h3>{{ p.name }}</h3>
+    <p>{{ p.description or '' }}</p>
+    <span class="price">${{ '%.2f'|format(p.price) }}</span>
+  </article>
+  {% endfor %}
+</div>
+{% else %}
+<div class="panel empty">Aún no hay productos en el catálogo.</div>
+{% endif %}
+{% endblock %}
